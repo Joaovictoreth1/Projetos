@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        body { display: flex; justify-content: center; padding-top: 50px; background-color: #667eea; font-family: Arial, sans-serif; }
+        .container { background: white; padding: 20px; border-radius: 8px; width: 350px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 10px 15px; background: #5a67d8; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #434ce8; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
+        li.concluida span { text-decoration: line-through; color: #888; }
+        .btn-delete { background: #e53e3e; padding: 5px 10px; font-size: 12px; }
+        .btn-delete:hover { background: #c53030; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Minhas Tarefas</h2>
+        <div class="input-group">
+            <input type="text" id="nova-tarefa" placeholder="Adicione uma tarefa...">
+            <button onclick="adicionarTarefa()">Add</button>
+        </div>
+        <ul id="lista"></ul>
+    </div>
+    <script>
+        const input = document.getElementById('nova-tarefa');
+        const lista = document.getElementById('lista');
+
+        function adicionarTarefa() {
+            if (input.value.trim() === '') return;
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span onclick="this.parentElement.classList.toggle('concluida')" style="cursor:pointer; flex:1">${input.value}</span>
+                <button class="btn-delete" onclick="this.parentElement.remove()">X</button>
+            `;
+            lista.appendChild(li);
+            input.value = '';
+        }
+
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') adicionarTarefa();
+        });
+    </script>
+</body>
+</html>

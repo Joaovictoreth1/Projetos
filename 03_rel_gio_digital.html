@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio Digital</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #282c34; margin: 0; font-family: 'Courier New', Courier, monospace; }
+        .relogio { background: #1c1e22; color: #61dafb; font-size: 80px; padding: 30px 50px; border-radius: 15px; box-shadow: 0 0 20px rgba(97, 218, 251, 0.4); text-align: center; }
+        .data { font-size: 20px; color: #aaa; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="relogio">
+        <div id="tempo">00:00:00</div>
+        <div id="data" class="data">--/--/----</div>
+    </div>
+    <script>
+        function atualizarRelogio() {
+            const agora = new Date();
+            document.getElementById('tempo').textContent = agora.toLocaleTimeString('pt-BR');
+            document.getElementById('data').textContent = agora.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        setInterval(atualizarRelogio, 1000);
+        atualizarRelogio();
+    </script>
+</body>
+</html>

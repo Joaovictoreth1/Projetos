@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f7fafc; font-family: Arial, sans-serif; margin: 0; }
+        .box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+        h2 { margin-top: 0; color: #2d3748; }
+        .senha-display { background: #edf2f7; padding: 15px; font-size: 20px; letter-spacing: 2px; border-radius: 4px; margin-bottom: 20px; word-break: break-all; min-height: 24px; }
+        button { background: #38b2ac; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; width: 100%; margin-bottom: 10px; }
+        button:hover { background: #319795; }
+        .tamanho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Gerador de Senhas</h2>
+        <div class="senha-display" id="senha">...</div>
+        <div class="tamanho">
+            <label>Tamanho: <span id="valor-tamanho">12</span></label>
+            <input type="range" id="slider" min="6" max="30" value="12" oninput="atualizarValor()">
+        </div>
+        <button onclick="gerarSenha()">Gerar Senha</button>
+        <button onclick="copiarSenha()" style="background:#4a5568">Copiar</button>
+    </div>
+    <script>
+        function atualizarValor() {
+            document.getElementById('valor-tamanho').textContent = document.getElementById('slider').value;
+        }
+        function gerarSenha() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+            let senha = "";
+            const tamanho = document.getElementById('slider').value;
+            for (let i = 0; i < tamanho; i++) {
+                senha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('senha').textContent = senha;
+        }
+        function copiarSenha() {
+            const senha = document.getElementById('senha').textContent;
+            if(senha === "...") return;
+            navigator.clipboard.writeText(senha);
+            alert("Senha copiada para a área de transferência!");
+        }
+        gerarSenha();
+    </script>
+</body>
+</html>
