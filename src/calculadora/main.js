@@ -30,7 +30,7 @@ function press(key) {
   }
 }
 
-for (const button of buttons.querySelectorAll("button[value]")) {
+for (const button of buttons.querySelectorAll("button")) {
   button.addEventListener("click", () => press(button.value));
 }
 

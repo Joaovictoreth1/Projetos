@@ -5,7 +5,7 @@ export default defineConfig({
     include: ["tests/unit/**/*.test.js"],
     coverage: {
       include: ["src/**/*.js"],
-      reporter: ["text", "lcov"],
+      reporter: [["text", { skipFull: false }], "lcov"],
       thresholds: {
         lines: 90,
         branches: 85,

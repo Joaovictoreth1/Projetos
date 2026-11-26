@@ -15,7 +15,7 @@ const pages = [
 ];
 const headers = await readFile(new URL("../_headers", import.meta.url), "utf8");
 const csp = headers.match(
-  /^  Content-Security-Policy: (.+); frame-ancestors 'none'$/m,
+  /^ {2}Content-Security-Policy: (.+); frame-ancestors 'none'$/m,
 )?.[1];
 if (!csp) throw new Error("Missing enforceable CSP in _headers");
 
