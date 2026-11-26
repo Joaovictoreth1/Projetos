@@ -46,15 +46,21 @@
                 class="igual">=</button>
         </div>
     </div>
-    <script>
+    <script type="module">
+        import { evaluateExpression } from './exercises.mjs';
+
         const display = document.getElementById('display');
-        function inserir(valor) { display.value += valor; }
+        function inserir(valor) {
+            if (display.value === 'Erro') limpar();
+            display.value += valor;
+        }
         function limpar() { display.value = ''; }
         function apagar() { display.value = display.value.slice(0, -1); }
         function calcular() {
-            try { display.value = eval(display.value); } 
-            catch { display.value = 'Erro'; setTimeout(limpar, 1000); }
+            try { display.value = evaluateExpression(display.value); }
+            catch { display.value = 'Erro'; }
         }
+        Object.assign(window, { inserir, limpar, apagar, calcular });
     </script>
 </body>
 </html>
