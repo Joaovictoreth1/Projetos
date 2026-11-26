@@ -25,25 +25,33 @@
         <button onclick="gerarSenha()">Gerar Senha</button>
         <button onclick="copiarSenha()" style="background:#4a5568">Copiar</button>
     </div>
-    <script>
+    <script type="module">
+        import { generatePassword } from './exercises.mjs';
+
         function atualizarValor() {
             document.getElementById('valor-tamanho').textContent = document.getElementById('slider').value;
         }
         function gerarSenha() {
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-            let senha = "";
-            const tamanho = document.getElementById('slider').value;
-            for (let i = 0; i < tamanho; i++) {
-                senha += chars.charAt(Math.floor(Math.random() * chars.length));
+            const output = document.getElementById('senha');
+            try {
+                output.textContent = generatePassword(document.getElementById('slider').valueAsNumber);
+                output.dataset.generated = 'true';
+            } catch {
+                output.textContent = 'Gerador indisponível neste navegador.';
+                delete output.dataset.generated;
             }
-            document.getElementById('senha').textContent = senha;
         }
-        function copiarSenha() {
-            const senha = document.getElementById('senha').textContent;
-            if(senha === "...") return;
-            navigator.clipboard.writeText(senha);
-            alert("Senha copiada para a área de transferência!");
+        async function copiarSenha() {
+            const output = document.getElementById('senha');
+            if (!output.dataset.generated) return;
+            try {
+                await navigator.clipboard.writeText(output.textContent);
+                alert("Senha copiada para a área de transferência!");
+            } catch {
+                alert("Não foi possível copiar. Selecione a senha e copie manualmente.");
+            }
         }
+        Object.assign(window, { atualizarValor, gerarSenha, copiarSenha });
         gerarSenha();
     </script>
 </body>
