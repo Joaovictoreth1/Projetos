@@ -1,0 +1,36 @@
+{
+  "name": "projetos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^22.22.0 || >=24.8.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "serve": "npm run build && node scripts/serve.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings=0",
+    "lint:html": "html-validate '*.html'",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.58.2",
+    "@vitest/coverage-v8": "4.1.12",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "html-validate": "^11.22.1",
+    "jsdom": "^27.4.0",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "vitest": "4.1.12"
+  },
+  "overrides": {
+    "vite": "^7.3.8"
+  }
+}
