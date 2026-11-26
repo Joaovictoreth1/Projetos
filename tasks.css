@@ -83,6 +83,14 @@ button[type="submit"], button[aria-pressed="true"] {
     min-height: 1.5em;
 }
 
+.task-notice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
 #task-storage, .empty {
     padding: .7rem;
     border-radius: .45rem;

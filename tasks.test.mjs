@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { addTask, filterTasks, readTasks, taskStorageKey, toggleTask, writeTasks } from './tasks.mjs';
+import { addTask, filterTasks, readTasks, removeTask, restoreTask, taskStorageKey, toggleTask, writeTasks } from './tasks.mjs';
 
 test('restores valid tasks and ignores duplicate IDs and malformed values', () => {
     const raw = [
@@ -49,4 +49,14 @@ test('trims new titles, bounds their length and filters explicit completion chan
     assert.deepEqual(filterTasks(updated, 'all'), updated);
     assert.equal(second[0].done, false);
     assert.deepEqual(filterTasks(toggleTask(updated, '1', false), 'done'), []);
+});
+
+test('undo restores only the latest deletion at its original position without reverting later edits', () => {
+    const first = removeTask([1, 2, 3].map(id => ({ id, title: `Tarefa ${id}`, done: false })), 1);
+    const second = removeTask(first.remaining, 3);
+    const remaining = addTask(toggleTask(second.remaining, 2, true), 'Nova', 4);
+    const restored = restoreTask(remaining, second.removed);
+    assert.deepEqual(restored.map(({ id, done }) => [id, done]), [[2, true], [3, false], [4, false]]);
+    assert.equal(restoreTask(restored, second.removed), restored);
+    assert.deepEqual(removeTask(restored, 1), { remaining: restored, removed: null });
 });

@@ -30,7 +30,10 @@
     </div>
 
     <p id="task-storage" role="status" hidden></p>
-    <p id="task-feedback" role="status" class="feedback"></p>
+    <div class="task-notice">
+      <p id="task-feedback" role="status" class="feedback"></p>
+      <button type="button" id="undo-task" hidden>Desfazer última exclusão</button>
+    </div>
     <p id="task-empty" class="empty">Sua lista está vazia.</p>
     <ul id="task-list" aria-label="Tarefas"></ul>
     <noscript><p>Ative o JavaScript para adicionar e marcar tarefas.</p></noscript>

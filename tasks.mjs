@@ -45,6 +45,20 @@ export function toggleTask(tasks, id, done) {
     return tasks.map(task => task.id === id ? { ...task, done } : task);
 }
 
+export function removeTask(tasks, id) {
+    const index = tasks.findIndex(task => task.id === id);
+    if (index === -1) return { remaining: tasks, removed: null };
+    return {
+        remaining: tasks.filter(task => task.id !== id),
+        removed: { task: tasks[index], index },
+    };
+}
+
+export function restoreTask(tasks, { task, index }) {
+    if (tasks.some(candidate => candidate.id === task.id)) return tasks;
+    return [...tasks.slice(0, index), task, ...tasks.slice(index)];
+}
+
 export function filterTasks(tasks, filter) {
     if (filter === 'active') return tasks.filter(task => !task.done);
     if (filter === 'done') return tasks.filter(task => task.done);
@@ -58,11 +72,13 @@ function bindTaskList(document, storage) {
     const empty = document.getElementById('task-empty');
     const summary = document.getElementById('task-summary');
     const feedback = document.getElementById('task-feedback');
+    const undo = document.getElementById('undo-task');
     const storageStatus = document.getElementById('task-storage');
     const filters = [...document.querySelectorAll('[data-filter]')];
     const initial = readTasks(storage);
     let tasks = initial.tasks;
     let filter = 'all';
+    let lastRemoved = null;
 
     function indicateStorage(text) {
         storageStatus.hidden = !text;
@@ -105,8 +121,12 @@ function bindTaskList(document, storage) {
                 moveFocus(render(), index, 'checkbox');
             });
             remove.addEventListener('click', () => {
-                commit(tasks.filter(candidate => candidate.id !== task.id));
-                feedback.textContent = 'Tarefa removida.';
+                const { remaining, removed } = removeTask(tasks, task.id);
+                if (!removed) return;
+                lastRemoved = removed;
+                commit(remaining);
+                undo.hidden = false;
+                feedback.textContent = 'Tarefa removida. Você pode desfazer a última exclusão.';
                 moveFocus(render(), index, 'remove');
             });
             row.append(label, remove);
@@ -121,9 +141,21 @@ function bindTaskList(document, storage) {
         (target?.[control] ?? input).focus();
     }
 
+    undo.addEventListener('click', () => {
+        if (!lastRemoved) return;
+        const { task } = lastRemoved;
+        commit(restoreTask(tasks, lastRemoved));
+        lastRemoved = null;
+        const targets = filterTasks(tasks, filter).includes(task) ? render() : setFilter('all');
+        moveFocus(targets, filterTasks(tasks, filter).indexOf(task), 'checkbox');
+        undo.hidden = true;
+        feedback.textContent = 'Tarefa restaurada.';
+    });
+
     form.addEventListener('submit', event => {
         event.preventDefault();
         const used = new Set(tasks.map(task => task.id));
+        if (lastRemoved) used.add(lastRemoved.task.id);
         let id = Date.now();
         while (used.has(String(id))) id++;
         const next = addTask(tasks, input.value, String(id));
@@ -144,7 +176,7 @@ function bindTaskList(document, storage) {
         for (const button of filters) {
             button.setAttribute('aria-pressed', String(button.dataset.filter === filter));
         }
-        render();
+        return render();
     }
 
     for (const button of filters) {
