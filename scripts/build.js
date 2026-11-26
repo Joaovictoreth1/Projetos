@@ -40,5 +40,9 @@ for (const directory of await readdir(source, { withFileTypes: true })) {
   }
 }
 
+await cp(
+  new URL("../favicon.svg", import.meta.url),
+  new URL("favicon.svg", output),
+);
 await writeFile(new URL("_headers", output), headers);
 console.log(`Built ${pages.length} static pages in dist/`);

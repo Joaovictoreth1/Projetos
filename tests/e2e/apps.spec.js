@@ -33,12 +33,19 @@ async function open(page, path) {
   expect(headers["permissions-policy"]).toBe(
     "camera=(), microphone=(), geolocation=()",
   );
+  await expect(
+    page.locator('link[rel="icon"][type="image/svg+xml"]'),
+  ).toHaveAttribute("href", "favicon.svg");
 }
 
 test("a página inicial liga a todos os endereços originais", async ({
   page,
 }) => {
   await open(page, "/");
+  const icon = await page.request.get("/favicon.svg");
+  expect(icon.status()).toBe(200);
+  expect(icon.headers()["content-type"]).toBe("image/svg+xml");
+  expect(browserErrors).toEqual([]);
   const links = page
     .getByRole("navigation", { name: "Aplicativos" })
     .getByRole("link");

@@ -17,6 +17,7 @@ const types = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
+  ".svg": "image/svg+xml",
 };
 
 createServer(async (request, response) => {
@@ -29,7 +30,9 @@ createServer(async (request, response) => {
   const file = path === "/" ? "/index.html" : path;
   if (
     !file ||
-    !/^\/(?:[\w]+\.html|src\/[\w-]+\/[\w-]+\.(?:css|js))$/.test(file)
+    !/^\/(?:favicon\.svg|[\w]+\.html|src\/[\w-]+\/[\w-]+\.(?:css|js))$/.test(
+      file,
+    )
   ) {
     response.writeHead(404, headers).end();
     return;
