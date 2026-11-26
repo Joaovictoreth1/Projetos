@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #282c34;
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+}
+.relogio {
+  background: #1c1e22;
+  color: #61dafb;
+  font-size: clamp(2rem, 14vw, 80px);
+  padding: 30px clamp(15px, 7vw, 50px);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(97, 218, 251, 0.4);
+  text-align: center;
+}
+.data {
+  font-size: 20px;
+  color: #aaa;
+  margin-top: 10px;
+}
