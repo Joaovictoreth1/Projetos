@@ -1,0 +1,32 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #1a202c;
+  background: #f0f2f5;
+}
+
+main {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: clamp(1rem, 6vw, 4rem) 1rem;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  padding: 0;
+  gap: 1rem;
+  list-style: none;
+}
+
+a {
+  display: block;
+  padding: 1rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 0.5rem;
+  background: white;
+  color: #2c5282;
+}
+
+a:hover {
+  background: #ebf8ff;
+}

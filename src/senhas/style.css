@@ -1,0 +1,78 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7fafc;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+.box {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+  max-width: calc(100% - 76px);
+}
+h1 {
+  margin: 0 0 0.83em;
+  color: #2d3748;
+  font-size: 1.5em;
+}
+.senha-display {
+  background: #edf2f7;
+  padding: 15px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  word-break: break-all;
+  min-height: 24px;
+}
+button {
+  background: #38b2ac;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+}
+button:hover {
+  background: #319795;
+}
+.tamanho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.tamanho input {
+  min-width: 0;
+}
+fieldset {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  text-align: left;
+  margin: 0 0 20px;
+  border: 1px solid #a0aec0;
+  border-radius: 4px;
+}
+#copiar {
+  background: #4a5568;
+}
+#copiar:not(:disabled):hover {
+  background: #2d3748;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+#status {
+  margin: 0;
+}
