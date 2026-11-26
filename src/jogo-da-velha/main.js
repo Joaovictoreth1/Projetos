@@ -35,7 +35,7 @@ function render() {
   status.textContent = game.winner
     ? `Jogador ${game.winner} venceu!`
     : game.draw
-      ? "Deu velha!"
+      ? "Deu Velha!"
       : `Vez do ${game.turn}`;
 }
 

@@ -223,7 +223,7 @@ it("marca a vitória, ignora jogadas inválidas e reinicia com foco no tabuleiro
   find("#reiniciar").click();
   expect(document.activeElement).toBe(cells[0]);
   [0, 1, 2, 4, 3, 5, 7, 6, 8].forEach((index) => cells[index].click());
-  expect(find("#status").textContent).toBe("Deu velha!");
+  expect(find("#status").textContent).toBe("Deu Velha!");
 });
 
 it("pausa, continua de onde parou e zera o cronômetro", async () => {
