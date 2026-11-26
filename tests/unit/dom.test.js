@@ -78,10 +78,22 @@ it("opera a calculadora pelo teclado e pelos botões e permite recuperar de erro
   press("7");
   press("Backspace");
   expect(find("#display").value).toBe("4");
-  find('button[value="Escape"]').focus();
-  expect(press("Enter").defaultPrevented).toBe(false);
   find('button[value="Escape"]').click();
   expect(find("#display").value).toBe("");
+
+  const two = find('button[value="2"]');
+  two.focus();
+  two.click();
+  expect(document.activeElement).toBe(two);
+  expect(press("+").defaultPrevented).toBe(true);
+  expect(press("3").defaultPrevented).toBe(true);
+  const enter = press("Enter");
+  // jsdom does not activate the focused button for a synthetic keydown.
+  if (!enter.defaultPrevented) two.click();
+  expect(find("#display").value).toBe("5");
+  expect(enter.defaultPrevented).toBe(true);
+  expect(press("Backspace").defaultPrevented).toBe(true);
+  expect(press("Escape").defaultPrevented).toBe(true);
 });
 
 it("renderiza tarefas existentes, salva edições e mantém botões acessíveis", async () => {

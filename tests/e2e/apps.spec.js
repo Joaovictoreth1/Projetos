@@ -77,6 +77,18 @@ test("a calculadora respeita precedência e se recupera após divisão por zero"
   await expect(display).toHaveValue("");
 });
 
+test("Enter calcula sem ativar o botão em foco", async ({ page }) => {
+  await open(page, "/01_calculadora_simples.html");
+  const two = page.getByRole("button", { name: "2", exact: true });
+  await two.click();
+  await expect(two).toBeFocused();
+  await page.keyboard.type("+3");
+  await page.keyboard.press("Enter");
+  await expect(
+    page.getByRole("textbox", { name: "Visor da calculadora" }),
+  ).toHaveValue("5");
+});
+
 test("a lista mantém texto literal e restaura estado após recarregar", async ({
   page,
 }) => {

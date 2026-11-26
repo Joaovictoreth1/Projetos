@@ -43,8 +43,6 @@ document.addEventListener("keydown", (event) => {
     event.metaKey
   )
     return;
-  if (event.key === "Enter" && event.target instanceof HTMLButtonElement)
-    return;
   if (
     /^[0-9.+*/=-]$/.test(event.key) ||
     ["Enter", "Backspace", "Escape"].includes(event.key)
